@@ -1,0 +1,130 @@
+{
+  "name": "General AI Chatbot",
+  "nodes": [
+    {
+      "parameters": {
+        "public": true,
+        "initialMessages": "Hi! 👋 I am your AI assistant. Ask me anything — general knowledge, business, coding, writing, ideas, and more.",
+        "options": {
+          "inputPlaceholder": "Type your question...",
+          "subtitle": "Ask me anything.",
+          "title": "AI Assistant",
+          "responseMode": "lastNode"
+        }
+      },
+      "id": "466c6be5-77f1-44f7-8de4-323edec908a9",
+      "name": "Chat",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        0,
+        112
+      ],
+      "webhookId": "b22215cd-c7c8-417c-baf6-491d98192d15"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "You are a helpful, knowledgeable, and friendly general-purpose AI assistant, similar to ChatGPT or Gemini. Answer any question the user asks — general knowledge, science, history, business, coding, writing, math, advice, brainstorming, and more — as accurately and clearly as possible. Give well-structured, concise answers, and use examples or step-by-step reasoning when it helps. If you are unsure or a fact could be outdated, say so honestly rather than guessing. Reply in the same language the user writes in.",
+          "enableStreaming": false
+        }
+      },
+      "id": "35b9f142-8f9e-47ba-8e05-bc4dbe15e0cc",
+      "name": "AI Assistant",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        224,
+        112
+      ]
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-5.4-mini",
+          "cachedResultName": "gpt-5.4-mini"
+        },
+        "responsesApiEnabled": false,
+        "options": {}
+      },
+      "id": "c650727c-a4d6-489a-b1fa-1c20a6839540",
+      "name": "OpenAI Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        240,
+        336
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": null,
+          "name": "Gateway credits",
+          "__aiGatewayManaged": true
+        }
+      }
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 15
+      },
+      "id": "deda9453-7931-4539-9027-6447d19b88fe",
+      "name": "Chat Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        368,
+        336
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Chat": {
+      "main": [
+        [
+          {
+            "node": "AI Assistant",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Assistant",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Assistant",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "5bff9e04-03f5-4aa4-b2e2-cee9458438a9",
+  "meta": {
+    "instanceId": "0c7911ef64847c3228b3b2461364e52cb3746bc200d7c8235ec1ed54f23d549f"
+  },
+  "nodeGroups": [],
+  "id": "8zpQ7S5sTuV9K77o",
+  "tags": []
+}
